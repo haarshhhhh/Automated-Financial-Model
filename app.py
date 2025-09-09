@@ -40,8 +40,8 @@ def load_company_excel(file_name: str) -> dict:
     """Fetch Excel from GitHub and return all sheets as DataFrames."""
     url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{REPO_NAME}/{BRANCH}/{DATA_FOLDER}{file_name}"
     try:
-        sheets = pd.read_excel(url, sheet_name=None)
-        return sheets
+        df = pd.read_excel(url, sheet_name=None)
+        return df
     except Exception as e:
         st.error(f"❌ Could not load {file_name} from GitHub.\nError: {e}")
         return {}
@@ -57,14 +57,14 @@ company = st.selectbox("🏢 Select a Company", list(COMPANY_FILES.keys()))
 # Step 2: Load company data
 if st.button("📂 Load Company Data"):
     file_name = COMPANY_FILES[company]
-    sheets = load_company_excel(file_name)
+    df = load_company_excel(file_name)
 
-    if sheets:
-        st.success(f"✅ Loaded {company} successfully! Sheets: {list(sheets.keys())}")
+    if df:
+        st.success(f"✅ Loaded {company} successfully! Sheets: {list(df.keys())}")
 
         # Process financials
         with st.spinner("Processing financial statements..."):
-            results = process_file(sheets)
+            results = process_file(df)
 
         # Sidebar for options
         option = st.sidebar.radio(
