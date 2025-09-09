@@ -11,17 +11,14 @@ BRANCH = "main"
 DATA_FOLDER = ""  # if your xlsx are at repo root, leave empty
 
 COMPANY_FILES = {
-    "Infosys": "Infosys (1).xlsx",
-    "Reliance Industries": "Reliance Industr.xlsx",
-    "Nestle India": "Nestle India (1).xlsx",
+    "Infosys": "Infosys.xlsx",
+    "Reliance Industries": "RelianceIndustr.xlsx",
+    "Nestle India": "NestleIndia.xlsx",
     "ITC": "ITC.xlsx",
-    "Tata Consumer": "Tata Consumer.xlsx",
-    "Tata Motors": "Tata Motors (2).xlsx",
-    "Tata Power": "Tata Power Co (1).xlsx",
-    "Tata Steel": "Tata Steel.xlsx",
-    "Tata Power (Alt)": "TATAPOWER.xlsx",
-    "Tata Steel (Alt)": "TATASTEEL.xlsx",
-    "Tata Consumer (Alt)": "TATACONSUM.xlsx"
+    "Tata Consumer": "TataConsumer.xlsx",
+    "Tata Motors": "TataMotors.xlsx",
+    "Tata Power": "TataPower.xlsx",
+    "Tata Steel": "TataSteel.xlsx"
 }
 
 @st.cache_data
