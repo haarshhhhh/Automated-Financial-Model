@@ -12,6 +12,9 @@ import numpy as np
 import pandas as pd
 # Slice the DataFrame to get the P&L section using fixed row numbers
 # Based on previous successful execution, assuming P&L data is within rows 14 to 30
+
+def process_file(sheets: dict) -> dict:
+    try:
 pl_df = df.iloc[14:30].copy()
 
 # 2. Set the first row as the header
@@ -45,8 +48,7 @@ rename_dict = dict(zip(date_cols, new_colnames))
 pl_df = pl_df.rename(columns=rename_dict)
 
 
-# Display the resulting dataframe to check
-print(pl_df)
+
 
 bs_df = df.iloc[54:71].copy()
 
@@ -81,8 +83,7 @@ rename_dict = dict(zip(date_cols, new_colnames))
 bs_df = bs_df.rename(columns=rename_dict)
 
 
-# Display the resulting dataframe to check
-print(bs_df)
+
 
 qt_df = df.iloc[39:49].copy()
 
@@ -117,8 +118,7 @@ rename_dict = dict(zip(date_cols, new_colnames))
 qt_df = qt_df.rename(columns=rename_dict)
 
 
-# Display the resulting dataframe to check
-print(qt_df)
+
 
 # Assuming cf_df is already defined from previous steps
 
@@ -150,8 +150,7 @@ if not pd.api.types.is_datetime64_any_dtype(date_cols):
 # 3. Convert all data columns to numeric, handling errors
 cf_df = cf_df.apply(pd.to_numeric, errors='coerce')
 
-# Display the cleaned and structured DataFrame
-display(cf_df)
+
 
 # Assuming pl_df, balance_df are already defined.
 
@@ -389,8 +388,8 @@ for row in count_rows:
 # Apply the formatting to the DataFrame for display
 # Using na_rep='-' will display a dash for empty values (like the first year's growth %)
 styled_df = IS_df.style.format(formatter, na_rep="-").set_properties(**{'text-align': 'right'})
+ 
 
-display(styled_df)
 
 # Convert all data columns to numeric type, handling any potential errors
 # Separate the index column and data columns before numeric conversion
@@ -601,3 +600,18 @@ ratios_df.loc['Cash Conversion Cycle (Days)', date_cols] = ratios_df.loc['Debtor
 # ==============================================================================
 print("Complete Ratio Analysis")
 styled_ratios = ratios_df.style.format("{:,.2f}", na_rep="-")
+
+        return {
+            "income_statement": IS_df,
+            "balance_sheet": balance_sheet,
+            "cash_flow_statement": cf_df,
+            "ratios": ratios_df
+        }
+
+    except Exception as e:
+        return {
+            "income_statement": pd.DataFrame(),
+            "balance_sheet": pd.DataFrame(),
+            "cash_flow_statement": pd.DataFrame(),
+            "ratios": pd.DataFrame({"Error": [str(e)]})
+        }
