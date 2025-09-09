@@ -24,8 +24,8 @@ COMPANY_FILES = {
 @st.cache_data
 def load_company_excel(file_name: str) -> dict:
     url = f"https://raw.githubusercontent.com/{GITHUB_USER}/{REPO_NAME}/{BRANCH}/{DATA_FOLDER}{file_name}"
-    sheets = pd.read_excel(url, sheet_name=None)
-    return sheets
+    df = pd.read_excel(url, sheet_name="Data Sheet")
+    return df
 
 st.set_page_config(page_title="Automated Financial Model", layout="wide")
 st.title("📊 Automated Financial Modeling Demo")
